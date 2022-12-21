@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="Windows-1251">
+<meta name="description" content="Крупнейший русскоязычный битторрент трекер">
+
+<title>RuTracker.org</title>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#2b5797">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="search" type="application/opensearchdescription+xml" title="Поиск на RuTracker.org" href="https://static.t-ru.org/opensearch.xml">
+
+<script>
+window.BB = {
+	cur_domain: location.hostname.replace(/.*?(([a-z0-9-]+\.){1,2}[a-z0-9-]+)$/, '$1'),
+	form_token: '',
+	opt_js: {},
+
+	IS_GUEST: !!'1',
+	IMG_URL: 'https://static.t-ru.org/templates/v1/images',
+	SMILES_URL: 'https://static.t-ru.org/smiles',
+	catId: 0,
+	FORUM_ID: 0,
+	parentForumId: 0,
+		COOKIE_MARK: 'bb_mark_read',
+	};
+BB.cookie_defaults = {
+	domain: '.' + BB.cur_domain,
+	path: "/forum/",
+};
+</script>
+<link href="https://static.t-ru.org/templates/v1/min/636fa1dc4cc7fe765c93b4f0c6425952.all.min.css" rel="stylesheet">
+<script src="https://static.t-ru.org/templates/v1/min/1456f21d4ac2ffe39ad6c724530cd254.lib.min.js"></script>
+<script src="https://static.t-ru.org/templates/v1/min/1074f81ce5650afcbe468fd2540d5936.bb.min.js"></script>
+
+
+
+<style>
+.invisible-el {
+	/* @include element-invisible(); */
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+}
+.hidden, .menu-sub, #ajax-loading, #ajax-error, var.ajax-params, #modal-blocker, .q-post {
+	display: none;
+}
+/**/
+#logo {
+	min-height: auto;
+}
+/**/
+/* temp */
+/* temp end */
+</style>
+
+<noscript>
+	<style>
+	.sp-body {
+		display: block; /* for bots */
+	}
+	</style>
+</noscript>
+
+</head>
+
+<body class="" style="">
+
+<div id="invisible-heap" class="invisible-el"></div>
+<div id="preload" class="invisible-el"></div>
+
+<div id="misc-hidden-elements" style="display: none;">
+	<form id="cse-search-box" action="search_cse.php" accept-charset="utf-8">
+		<input id="cse-text-match" type="text" name="q" size="60" value="">
+		<input type="submit" value="Поиск в Google">
+	</form>
+</div>
+
+
+
+<div id="body_container">
+
+		<script>
+	if (top != self && !self.location.hostname.match(BB.allowed_translator_hosts)) {
+		$(function () {
+			$('body').html('<h1 style="text-align: center;"><br><br>Похоже, вас пытаются обмануть<br>frame\'s hostname: ' + self.location.hostname + '</h1>');
+			throw new Error('in frame');
+		});
+	}
+		</script>
+
+	<div id="page_container">
+
+		<div id="page_header" class="hide-for-print">
+
+			<div id="main-nav" class="site-nav clearfix">
+				<ul class="inlined middot-separated floatL">
+					<li>
+						<a href="index.php"><b>Главная</b></a>
+					</li>
+					<li>
+													<a href="tracker.php" rel="nofollow"><b>Трекер</b></a>
+											</li>
+					<li>
+						<a href="search.php" rel="nofollow"><b>Поиск</b></a>
+					</li>
+					<li>
+						<a href="groupcp.php" rel="nofollow"><b>Группы</b></a>
+					</li>
+					<li>
+						<a href="http://rutracker.wiki/" target="_blank"><b>FAQ</b></a>
+					</li>
+											<li>
+							<a href="viewforum.php?f=1649" style="color: #7b1fa2;"><b>VPN</b></a>
+						</li>
+						<li>
+							<a href="viewtopic.php?t=5804178" style=""><b>Tor</b></a>
+						</li>
+						<li>
+							<a href="viewtopic.php?t=1045"><b style="color: #384aaa;">Правила</b></a>
+						</li>
+														</ul>
+											</div>
+			<!--/main-nav-->
+
+			
+			<div id="logo">
+				<table style="">
+				<tr>
+					<td id="logo-td" style="padding: 3px 7px 3px 15px;">
+						<a href="index.php" class="site-logo-link">
+								<img class="site-logo"
+		src="https://static.t-ru.org/logo/logo-3.svg"
+		style=""
+		alt="logo">
+							</a>
+					</td>
+					<td class="tCenter w100" style="padding: 6px 10px 0 3px;">
+											</td>
+				</tr>
+				</table>
+			</div>
+			<!--/logo-->
+
+			<div class="topmenu">
+				<table class="w100">
+				<tr>
+					
+					<td class="tCenter pad_2 nowrap">
+						<div>
+															<a href="profile.php?mode=register" rel="nofollow"><b>Регистрация</b></a>
+								&nbsp;&#0183;&nbsp;
+								<a href="#" onclick="BB.toggle_top_login(); return false;" tabindex="5"><b>Вход</b></a>
+
+								<div id="top-login-box">
+									<form id="quick-search-guest" method="get" action="tracker.php">
+										<input id="search-text-guest" type="text" name="nm" value="" tabindex="1" accesskey="q">
+										<input type="submit" value="поиск" tabindex="2">
+									</form>
+									<form id="login-form-quick" method="post" action="login.php" style="display: none;">
+																				<input id="top-login-uname" type="text" name="login_username" tabindex="1" accesskey="l" placeholder="имя">
+										<input id="top-login-pwd" type="password" name="login_password" tabindex="2" placeholder="пароль">
+										<label title="Защищенное соединение" class="login-ssl-block" style="display: none;">
+											<input class="login-ssl" type="checkbox" tabindex="3" checked>SSL
+										</label>
+										<input id="top-login-btn" type="submit" name="login" value="вход" tabindex="4">
+									</form>
+								</div>
+
+								<a href="profile.php?mode=sendpassword" rel="nofollow">Забыли имя или пароль?</a>
+													</div>
+					</td>
+
+					
+				</tr>
+				</table>
+			</div><!--/topmenu-->
+
+			
+		</div>
+		<!--/page_header-->
+
+		
+		<div id="page_content">
+			<table style="width: 100%; border: none;">
+			<tr>
+
+								<td id="sidebar1">
+					<div id="sidebar1_wrap">
+
+	
+	<div>
+		<h3>FAQ</h3>
+		<ul class="med">
+			<li>
+				<a href="viewtopic.php?t=1045"><b style="color: brown;">Правила</b></a>
+				/
+				<a href="/go/1" rel="nofollow" target="_blank"><b style="color: brown;">Как тут качать</b></a>
+			</li>
+			<li><a href="/go/10" rel="nofollow" target="_blank">Основные понятия</a></li>
+			<li><a href="/go/5" rel="nofollow" target="_blank">Общие вопросы</a></li>
+			<li><a href="/go/6" rel="nofollow" target="_blank">Что такое torrent (торрент)</a></li>
+			<li><a href="/go/11" rel="nofollow" target="_blank">Как пользоваться Поиском</a></li>
+			<li><a href="/go/8" rel="nofollow" target="_blank">Кому задать вопрос</a></li>
+		</ul>
+	</div>
+
+	
+	<div>
+		<h3>FAQ</h3>
+		<ul class="med">
+			<li><a href="/go/7" rel="nofollow" target="_blank"><b>Как создать раздачу</b></a></li>
+			<li><a href="/go/9" rel="nofollow" target="_blank">Как залить картинку</a></li>
+			<li><a href="viewtopic.php?t=971472">Угнали аккаунт / забанили?</a></li>
+			<li><a href="/go/13" rel="nofollow" target="_blank">Как почистить кеш и куки</a></li>
+			<li><a href="/go/14" rel="nofollow" target="_blank">Как перезалить торрент-файл</a></li>
+			<li><a href="viewtopic.php?t=964118">Хочу лычку!</a></li>
+		</ul>
+	</div>
+
+	
+	<div>
+		<h3>BitTorrent клиенты</h3>
+		<ul>
+			<li><a href="viewtopic.php?t=2965837"><b style="color: brown;">Несовместимые с трекером</b></a></li>
+			<li><a href="viewforum.php?f=329" class="med"><b>uTorrent</b></a></li>
+			<li><a href="viewforum.php?f=331">BitComet</a></li>
+			<li><a href="viewforum.php?f=353">Клиенты под Linux</a></li>
+			<li><a href="/go/12" rel="nofollow" target="_blank">Как настроить клиент на максимальную скорость</a></li>
+		</ul>
+	</div>
+
+	<div>
+		<h3>FAQ</h3>
+		<ul class="med">
+			<li><a href="viewforum.php?f=23">Обработка аудио и видео</a></li>
+			<li><a href="/go/19" rel="nofollow" target="_blank">Настройки роутеров и файерволлов</a></li>
+			<li><a href="/go/20" rel="nofollow" target="_blank">Решение проблем с компьютерами</a></li>
+			<li><a href="/go/21" rel="nofollow" target="_blank">Хеш-сумма и магнет-ссылки</a></li>
+			<li><a href="/go/22" rel="nofollow" target="_blank">FAQ по учёту статистики</a></li>
+		</ul>
+	</div>
+
+	<div class="tr_main_cats">
+		<h3>Кино, Видео, ТВ</h3>
+		<ul>
+			<li><a href="viewforum.php?f=7">Фильмы</a>, <a href="viewforum.php?f=22">Наше кино</a>, <a href="viewforum.php?f=511">Театр</a></li>
+			<li><a href="viewforum.php?f=124">Арт-хаус и авторское кино</a></li>
+			<li><a href="viewforum.php?f=93">DVD</a>, <a href="viewforum.php?f=2198">HD</a>, <a href="viewforum.php?f=352">3D</a></li>
+			<li><a href="viewforum.php?f=46">Док. фильмы</a>, <a href="viewforum.php?f=255">Спорт</a></li>
+			<li><a href="viewforum.php?f=33">Аниме</a>, <a href="viewforum.php?f=4">Мультфильмы</a></li>
+			<li><a href="viewforum.php?f=921">Мультсериалы</a>, <a href="viewforum.php?f=24">Юмор</a></li>
+			<li><a href="index.php?c=18" rel="nofollow">Сериалы</a></li>
+		</ul>
+	</div>
+
+	<div class="tr_main_cats">
+		<h3>Книги, Ин. языки, Уроки</h3>
+		<ul>
+			<li><a href="index.php?c=25" rel="nofollow">Книги</a>, <a href="index.php?c=33">Аудиокниги</a></li>
+			<li><a href="index.php?c=10" rel="nofollow">Обучающее видео</a></li>
+			<li><a href="index.php?c=34" rel="nofollow">Ин. языки</a>, <a href="viewforum.php?f=610">Видеоуроки</a></li>
+		</ul>
+	</div>
+
+	<div class="tr_main_cats">
+		<h3>Музыка, Ноты, Караоке</h3>
+		<ul>
+			<li><a href="index.php?c=22" rel="nofollow">Рок музыка</a></li>
+			<li><a href="viewforum.php?f=409">Классическая музыка</a></li>
+			<li><a href="index.php?c=31" rel="nofollow">Джаз и Блюз</a>, <a href="index.php?c=35">Поп музыка</a></li>
+			<li><a href="viewforum.php?f=1125">Фольклор</a></li>
+			<li><a href="viewforum.php?f=408">Рэп, Хип-Хоп, R'n'B</a></li>
+			<li><a href="index.php?c=23" rel="nofollow">Электронная музыка</a></li>
+			<li><a href="viewforum.php?f=416">Саундтреки и Караоке</a></li>
+			<li><a href="viewforum.php?f=1215">Шансон, Авторская песня</a></li>
+			<li><a href="viewforum.php?f=919">Ноты и Либретто</a></li>
+			<li><a href="index.php?c=39">Музыкальное видео</a></li>
+		</ul>
+	</div>
+
+	<div class="tr_main_cats">
+		<h3>Игры, Программы, КПК</h3>
+		<ul>
+			<li><a href="viewforum.php?f=1933">iOS</a>, <a href="viewforum.php?f=1376">Linux</a>, <a href="viewforum.php?f=1366">Macintosh</a></li>
+			<li><a href="viewforum.php?f=5">Игры для Windows</a>
+			<li><a href="viewforum.php?f=548">Игры для консолей</a></li>
+			<li><a href="viewforum.php?f=1012">Операционные системы</a></li>
+			<li><a href="viewforum.php?f=1013">Системные программы</a></li>
+			<li><a href="viewforum.php?f=1052">Веб-разработка</a>, <a href="viewforum.php?f=828">Клипарты</a></li>
+			<li><a href="viewforum.php?f=1016">Мультимедиа и 3D контент</a></li>
+			<li><a href="viewforum.php?f=285">Мобильные тел. и КПК</a></li>
+			<li><a href="viewforum.php?f=10">Разное</a></li>
+		</ul>
+	</div>
+
+	
+</div><!--/sidebar1_wrap-->
+				</td><!--/sidebar1-->
+				
+				<td id="main_content">
+					<div id="main_content_wrap">
+
+																		<script>
+						//$(function(){
+						//	$('#news-t-5115937').addClass('new');
+						//});
+						</script>
+												<div id="latest_news">
+							<table class="w100">
+							<tr>
+								<td class="w100">
+									<h3>Новости трекера</h3>
+									<table id="latest-news-table">
+																		<tr>
+										<td>
+											<div class="news_date">17-Дек</div>
+										</td>
+										<td class="w100">
+											<div id="news-t-6298107" class="news_title">
+												<a href="viewtopic.php?t=6298107">Новогодний раздел</a>
+											</div>
+										</td>
+									</tr>
+																		<tr>
+										<td>
+											<div class="news_date">17-Сен</div>
+										</td>
+										<td class="w100">
+											<div id="news-t-6259778" class="news_title">
+												<a href="viewtopic.php?t=6259778">День Рождения RuTracker.org - нам 18 лет!</a>
+											</div>
+										</td>
+									</tr>
+																		<tr>
+										<td>
+											<div class="news_date">06-Май</div>
+										</td>
+										<td class="w100">
+											<div id="news-t-6210882" class="news_title">
+												<a href="viewtopic.php?t=6210882">День Победы!</a>
+											</div>
+										</td>
+									</tr>
+																		<tr>
+										<td>
+											<div class="news_date">31-Дек</div>
+										</td>
+										<td class="w100">
+											<div id="news-t-6157951" class="news_title">
+												<a href="viewtopic.php?t=6157951">С Новым 2022 Годом!</a>
+											</div>
+										</td>
+									</tr>
+																		<tr>
+										<td>
+											<div class="news_date">24-Ноя</div>
+										</td>
+										<td class="w100">
+											<div id="news-t-6141253" class="news_title">
+												<a href="viewtopic.php?t=6141253">На форуме созданы разделы для раздач без перевода на русский язык</a>
+											</div>
+										</td>
+									</tr>
+																		</table>
+								</td>
+								<td style="padding: 2px;" class="vMiddle">
+																	</td>
+							</tr>
+							</table>
+						</div><!--/latest_news-->
+						
+						
+						
+						
+						<!--/page_header.tpl-->
+<div id="forums_list_wrap">
+
+	<div id="forums_top_links" class="clearfix">
+		<ul class="inlined middot-separated floatL">
+			<li><a href="index.php?map" class="med bold"><img class="feed-small" src="https://static.t-ru.org/templates/v1/images/feed_1.png" alt="f"> Карта форумов</a></li>
+			<li>
+				<a href="http://feed.rutracker.cc/atom/f/0.atom" class="med" target="_blank"><img class="feed-small" src="https://static.t-ru.org/templates/v1/images/feed_1.png" alt="a"> Последние раздачи</a>
+			</li>
+					</ul>
+			</div><!--/forums_top_links-->
+
+	
+	<div id="forums_wrap">
+
+		<table class="w100">
+		<tr>
+			<td id="categories-wrap">
+					<style>
+	.sf_title {
+		display: block;
+		font-size: 12px;
+		line-height: 1.45;
+	}
+	.subforums {
+		padding-left: 1em;
+	}
+	</style>
+	<script>
+	$(function () {
+		setTimeout(function () {
+			$.scrollTo($('#c-18'), {
+				duration: 0,
+				offset: -50,
+			});
+		}, 100);
+	});
+	</script>
+<script>
+$(function () {
+	$('#f-566 a').attr({ target: '_blank', href: 'http://rutracker.wiki/' });
+});
+</script>
+
+	<script>
+	$(function () {
+		var cat_id = BB.getUrlParam('c');
+		if (cat_id) {
+			$('table.forums').not('#cf-' + cat_id).hide();
+		}
+	});
+	</script>
+
+
+		<div id="c-38" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=38" rel="nofollow">Товары, услуги, игры и развлечения</a></h3>
+
+			</div><!--/category-->
+		<div id="c-36" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=36" rel="nofollow">ОБХОД БЛОКИРОВОК</a></h3>
+
+			</div><!--/category-->
+		<div id="c-4" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=4" rel="nofollow">Новости</a></h3>
+
+			</div><!--/category-->
+		<div id="c-16" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=16" rel="nofollow">Вопросы по форуму и трекеру</a></h3>
+
+			</div><!--/category-->
+		<div id="c-2" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=2" rel="nofollow">Кино, Видео и ТВ</a></h3>
+
+			</div><!--/category-->
+		<div id="c-18" class="category">
+				<h3 class="cat_title"><a class="expanded" href="index.php?c=18" rel="nofollow">Сериалы</a></h3>
+
+					<table id="cf-18" class="forums">
+						<tr id="f-917">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=917">Предложения по улучшению категории &quot;Сериалы&quot;</a></h4>
+
+									</td>
+			</tr>
+						<tr id="f-9">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=9">Русские сериалы</a></h4>
+
+											<p class="subforums">
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=26">Ищу (Русские сериалы)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=32">Обсуждение (Русские сериалы)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=81">Русские сериалы (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=920">Русские сериалы (DVD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=80">Сельский детектив</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1535">По законам военного времени</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=188">Московские тайны</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=91">Я знаю твои секреты</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=990">Универ / Универ. Новая общага / СашаТаня</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1408">Женская версия</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=175">След</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=79">Некрасивая подружка</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=104">Психология преступления</a></span>
+													</p>
+									</td>
+			</tr>
+						<tr id="f-189">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=189">Зарубежные сериалы</a></h4>
+
+											<p class="subforums">
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1147">Обсуждение сериалов</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=191">Ищу (Зарубежные сериалы)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=842">Новинки и сериалы в стадии показа</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=235">Сериалы США и Канады</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=242">Сериалы Великобритании и Ирландии</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=819">Скандинавские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1531">Испанские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=721">Итальянские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1102">Европейские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1120">Сериалы стран Африки, Ближнего и Среднего Востока</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1214">Сериалы Австралии и Новой Зеландии</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=489">Сериалы Ближнего Зарубежья</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=387">Сериалы совместного производства нескольких стран</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1359">Веб-сериалы, Вебизоды к сериалам и Пилотные серии сериалов</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=184">Бесстыжие / Shameless (US)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1171">Викинги / Vikings</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1417">Во все тяжкие / Breaking Bad</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=625">Доктор Хаус / House M.D.</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1449">Игра престолов / Game of Thrones</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=273">Карточный Домик / House of Cards</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=504">Клан Сопрано / The Sopranos</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=372">Сверхъестественное / Supernatural</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=110">Секретные материалы / The X-Files</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=121">Твин пикс / Twin Peaks</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=507">Теория большого взрыва + Детство Шелдона</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=536">Форс-мажоры / Костюмы в законе / Suits</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1144">Ходячие мертвецы + Бойтесь ходячих мертвецов</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=173">Черное зеркало / Black Mirror</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=195">Для некондиционных раздач</a></span>
+													</p>
+									</td>
+			</tr>
+						<tr id="f-2366">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=2366">Зарубежные сериалы (HD Video)</a></h4>
+
+											<p class="subforums">
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=119">Зарубежные сериалы (UHD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1803">Новинки и сериалы в стадии показа (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=266">Сериалы США и Канады (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=193">Сериалы Великобритании и Ирландии (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1690">Скандинавские сериалы (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1459">Европейские сериалы (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1463">Сериалы стран Африки, Ближнего и Среднего Востока (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=825">Сериалы Австралии и Новой Зеландии (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1248">Сериалы Ближнего Зарубежья (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1288">Сериалы совместного производства нескольких стран (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1669">Викинги / Vikings (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2393">Доктор Хаус / House M.D. (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=265">Игра престолов / Game of Thrones (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2406">Карточный домик (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2404">Сверхъестественное / Supernatural (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2405">Секретные материалы / The X-Files (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2370">Твин пикс / Twin Peaks (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2396">Теория Большого Взрыва / The Big Bang Theory (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2398">Ходячие мертвецы + Бойтесь ходячих мертвецов (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1949">Черное зеркало / Black Mirror (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1498">Для некондиционных раздач (HD Video)</a></span>
+													</p>
+									</td>
+			</tr>
+						<tr id="f-911">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=911">Сериалы Латинской Америки, Турции и Индии</a></h4>
+
+											<p class="subforums">
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=914">Ищу / Предлагаю</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1493">Актёры и актрисы латиноамериканских сериалов</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=325">Сериалы Аргентины</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=534">Сериалы Бразилии</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=594">Сериалы Венесуэлы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1301">Сериалы Индии</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=607">Сериалы Колумбии</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1574">Сериалы Латинской Америки с озвучкой (раздачи папками)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1539">Сериалы Латинской Америки с субтитрами</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1940">Официальные краткие версии сериалов Латинской Америки</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=694">Сериалы Мексики</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=775">Сериалы Перу, Сальвадора, Чили и других стран</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=781">Сериалы совместного производства</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=718">Сериалы США (латиноамериканские)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=704">Сериалы Турции</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1537">Для некондиционных раздач</a></span>
+													</p>
+									</td>
+			</tr>
+						<tr id="f-2100">
+				<td class="row1 f-icon-idx">
+					<img class="topic_icon" src="https://static.t-ru.org/templates/v1/images/folder_big_3.gif" alt="">
+				</td>
+				<td class="row1">
+					<h4 class="forumlink"><a href="viewforum.php?f=2100">Азиатские сериалы</a></h4>
+
+											<p class="subforums">
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=915">Корейские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1242">Корейские сериалы (HD Video)</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=717">Китайские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=1939">Японские сериалы</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2412">Сериалы Таиланда, Индонезии, Сингапура</a></span>
+														<span class="sf_title"><span class="dot-sf">•</span><a href="viewforum.php?f=2102">VMV и др. ролики</a></span>
+													</p>
+									</td>
+			</tr>
+						</table>
+			</div><!--/category-->
+		<div id="c-20" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=20" rel="nofollow">Документалистика и юмор</a></h3>
+
+			</div><!--/category-->
+		<div id="c-28" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=28" rel="nofollow">Спорт</a></h3>
+
+			</div><!--/category-->
+		<div id="c-25" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=25" rel="nofollow">Книги и журналы</a></h3>
+
+			</div><!--/category-->
+		<div id="c-34" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=34" rel="nofollow">Обучение иностранным языкам</a></h3>
+
+			</div><!--/category-->
+		<div id="c-10" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=10" rel="nofollow">Обучающее видео</a></h3>
+
+			</div><!--/category-->
+		<div id="c-33" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=33" rel="nofollow">Аудиокниги</a></h3>
+
+			</div><!--/category-->
+		<div id="c-24" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=24" rel="nofollow">Авто и мото</a></h3>
+
+			</div><!--/category-->
+		<div id="c-8" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=8" rel="nofollow">Музыка</a></h3>
+
+			</div><!--/category-->
+		<div id="c-35" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=35" rel="nofollow">Популярная музыка</a></h3>
+
+			</div><!--/category-->
+		<div id="c-31" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=31" rel="nofollow">Джазовая и Блюзовая музыка</a></h3>
+
+			</div><!--/category-->
+		<div id="c-22" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=22" rel="nofollow">Рок-музыка</a></h3>
+
+			</div><!--/category-->
+		<div id="c-23" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=23" rel="nofollow">Электронная музыка</a></h3>
+
+			</div><!--/category-->
+		<div id="c-37" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=37" rel="nofollow">Hi-Res форматы, оцифровки</a></h3>
+
+			</div><!--/category-->
+		<div id="c-39" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=39" rel="nofollow">Музыкальное видео</a></h3>
+
+			</div><!--/category-->
+		<div id="c-19" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=19" rel="nofollow">Игры</a></h3>
+
+			</div><!--/category-->
+		<div id="c-9" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=9" rel="nofollow">Программы и Дизайн</a></h3>
+
+			</div><!--/category-->
+		<div id="c-29" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=29" rel="nofollow">Мобильные устройства</a></h3>
+
+			</div><!--/category-->
+		<div id="c-26" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=26" rel="nofollow">Apple</a></h3>
+
+			</div><!--/category-->
+		<div id="c-11" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=11" rel="nofollow">Разное</a></h3>
+
+			</div><!--/category-->
+		<div id="c-1" class="category">
+				<h3 class="cat_title"><a class="" href="index.php?c=1" rel="nofollow">Обсуждения, встречи, общение</a></h3>
+
+			</div><!--/category-->
+	
+
+
+<div class="bottom_info">
+	<div id="timezone">
+		<p></p>
+		<p>Текущее время: <span class='tz_time'>21-Дек 16:16</span></p>
+		<p>Часовой пояс: <span class='tz_time'>GMT + 3</span></p>
+	</div>
+	<div class="clear"></div>
+	<div class="spacer_4"></div>
+</div><!--/bottom_info-->
+							</td>
+			<td style="width: 240px; vertical-align: top; padding-left: 2px;">
+				<div id="idx-sidebar2">
+
+	<div class="sb2-block">
+<h3>Авторские раздачи</h3>
+<ul>
+	<li><a class="bold" href="viewtopic.php?t=6278916">(Indie Rock/Brit Pop/Pop Rock) Open Space - Life Is Beautiful (2022)</a></li>
+<li><a class="bold" href="viewtopic.php?t=6275986">(Rap, Trip-hop) Meanna - Не приходя в сознание (2009) + Компиляция Mine (2012) + Внутренняя жизнь (2019)</a></li>
+<li><a class="bold" href="viewtopic.php?t=6272874">(Breakcore/T<wbr>rip-Hop/Ambi<wbr>ent/Abstract<wbr> Hip-Hop) Label: Cantroll (Cuntroll) (2018-2022),<wbr> релизы 115-174</a></li>
+<li><a class="bold" href="viewtopic.php?t=1798721">Регламент группы «Артсовет» (Или как попасть в авторские раздачи)</a></li>
+<li><a  href="viewtopic.php?t=6293671">(Pop/Pop-Roc<wbr>k) Лиза Дарина - Электрически<wbr>й день - 2021</a></li>
+<li><a  href="viewtopic.php?t=6293670">(Funk, Afro-beat, Nu Jazz) Danya Yuvachev &amp; Black Kandinsky orchestra - Carmagnole - 2022</a></li>
+<li><a  href="viewtopic.php?t=6293662">(Энциклопеди<wbr>я) Янке Владимир - it-кейs «31 (+1) знаковый альбом русской рок-музыки. 1978 – 2022»</a></li>
+<li><a  href="viewtopic.php?t=6293660">(Newretrowav<wbr>e/Synthwave)<wbr> NEMIX - Официальная Дискография - (2017-2022)</a></li>
+<li><a  href="viewtopic.php?t=6289481">(Alternative<wbr>/Nu-Metal) Шугалово Т.О.Р.Ч. - Гони бабло - 2002</a></li>
+<li><a  href="viewtopic.php?t=6289480">(ambient, experimental<wbr>, lo-fi, post-punk, darkwave) ВИА Думчино - &#925;&#949;&#966;&#941;&#955;&#951; - 2022</a></li>
+<li><a  href="viewtopic.php?t=6289479">(New Age / Instrumental<wbr> / Experimental<wbr>) Ajoura - Shiokalt - 2022</a></li>
+<li><a  href="viewtopic.php?t=6289478">(Rap/Hip-Hop<wbr>) 03406(И.С.) - В поисках света (2016-2018) + СТИХиЯ (2019) + Фобос (2021)</a></li>
+	<li><a href="viewforum.php?f=1538"><i>другие раздачи...</i></a></li>
+</ul>
+</div>
+
+	
+	<div class="sb2-block sb2-bg2">
+<h3>Новости &quot;Хранителей&quot; и &quot;Антикваров&quot;</h3>
+<ul>
+	<li><a class="bold" href="viewtopic.php?t=6174283">О проделанной работе</a></li>
+<li><a class="bold" href="viewtopic.php?t=6045096">Прием в группу Хранители</a></li>
+<li><a class="bold" href="viewtopic.php?t=4234659">Принимаем заявки на присвоение материалу статуса Антикварного<wbr></a></li>
+<li><a  href="viewtopic.php?t=5927700">(Classical) Tenors of Imperial Russia [Аудиозаписи]</a></li>
+<li><a  href="viewtopic.php?t=5908670">Jean Dussouchet - Cours primaire de Grammaire Fran&#231;aise. Brevet &#233;l&#233;mentair<wbr>e / Начальный курс грамматики французского<wbr> языка [Литература учебная]</a></li>
+<li><a  href="viewtopic.php?t=5762105">Сабинин С.К. - Грамматика Исландского языка, 1849 [Литература учебная]</a></li>
+<li><a  href="viewtopic.php?t=5760590">С&#1123;верные<wbr> цв&#1123;ты - 1826-1831 [Литература художественн<wbr>ая]</a></li>
+<li><a  href="viewtopic.php?t=5760243">[Эмулятор] Apple Macintosh 128K (System 1.x) [1984, ENG] [Компьютеры]</a></li>
+<li><a  href="viewtopic.php?t=5759832">Magini G.A. / Маджини Дж. - Geographiae universae / Всеобщая география [1596, PDF, LAT] [Литература документальн<wbr>ая / Литература учебная]</a></li>
+<li><a  href="viewtopic.php?t=5759255">Флетчер Дж. - О государств&#1123; русскомъ / О государстве русском [1906; 1867, PDF, RUS] [Литература документальн<wbr>ая / Литература историческая<wbr>]</a></li>
+	<li><a href="viewforum.php?f=2332"><i>другие раздачи...</i></a></li>
+</ul>
+</div>
+
+	
+</div>
+			</td>
+		</tr>
+		</table>
+
+	</div><!--/forums_wrap-->
+
+</div><!--/forums_list_wrap-->
+
+				</div><!--/main_content_wrap-->
+			</td><!--/main_content-->
+
+		</tr>
+		</table>
+	</div><!--/page_content-->
+
+	<!--page_footer-->
+	<div id="page_footer" class="hide-for-print">
+
+		
+		<div class="clear"></div>
+
+		<nav id="footer-info-links">
+			<div>
+				<a href="info.php?show=user_agreement" rel="nofollow">Условия использования</a>
+				&middot;
+				<a href="info.php?show=advert" rel="nofollow">Реклама на сайте</a>
+				&middot;
+				<a href="info.php?show=copyright_holders" rel="nofollow">Для правообладателей</a>
+				&middot;
+				<a href="info.php?show=press" rel="nofollow">Для прессы</a>
+				&middot;
+				<a href="viewtopic.php?t=2234744">Для провайдеров</a>
+				<!--&middot;-->
+				<!--<a href="http://rutracker.news">Блог</a>-->
+				&middot;
+				<a href="http://rutracker.wiki">Торрентопедия</a>
+			</div>
+			<div>
+				<a href="viewtopic.php?t=1045"><b>Правила</b></a>
+				&middot;
+				<a href="/go/8" rel="nofollow">Кому задать вопрос</a>
+				&middot;
+				<a href="viewforum.php?f=1538">Авторские раздачи</a>
+				&middot;
+				<a href="viewforum.php?f=1289">Конкурсы</a>
+				&middot;
+				<a href="viewforum.php?f=2332">Новости &quot;Хранителей&quot; и &quot;Антикваров&quot;</a>
+				&middot;
+				<a href="#" onclick="return post2url('index.php', {rand_rel: 1});" rel="nofollow">Случайная раздача</a>
+			</div>
+		</nav>
+
+		
+		<div class="tCenter nowrap" style="margin: 18px 4px 4px 4px;">
+								</div>
+
+		<div class="footer-bottom-links">
+			<ul class="inlined middot-separated">
+				<li><a href="groupcp.php?g=104792" rel="nofollow" target="_blank">Администрация</a></li>
+				<li><a href="groupcp.php?g=104787" rel="nofollow" target="_blank">Модераторы</a></li>
+				<li><a href="groupcp.php?g=104841" rel="nofollow" target="_blank">Тех. помощь</a></li>
+				<li><a href="https://t.me/rutracker_news" rel="nofollow" target="_blank">Telegram-канал</a></li>
+			</ul>
+			<div class="wide">
+									<script>
+					(function (d, w, c) {
+						(w[c] = w[c] || []).push(function () {
+							try {
+																w.yaCounter55725919 = new window.Ya.Metrika({ id: 55725919, clickmap: false, trackLinks: true, accurateTrackBounce: true });
+															} catch(e) { }
+						});
+						var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); };
+						s.type = "text/javascript";
+						s.async = true;
+						s.src = "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/watch.js";
+						if (w.opera == "[object Opera]") {
+							d.addEventListener("DOMContentLoaded", f, false);
+						} else { f(); }
+					})(document, window, "yandex_metrika_callbacks");
+					</script>
+													<script>
+					$(function () {
+						var title = "";
+						var src = "https://counter.yadro.ru/hit?t44.1;r" + encodeURIComponent(document.referrer) +
+							((typeof (screen) == "undefined") ? "" : ";s" + screen.width + "*" + screen.height + "*" + (screen.colorDepth ? screen.colorDepth : screen.pixelDepth)) +
+							";u" + encodeURIComponent(document.URL) + ";h" + encodeURIComponent(title.substring(0, 80)) + ";" + Math.random();
+						$('<img src="' + src + '" alt="">').on('load', function () {
+							$('#liveinternet').append(this);
+						});
+					});
+					</script>
+					<a id="liveinternet" href="https://www.liveinternet.ru/" target="_blank"></a>
+							</div>
+			<ul class="inlined middot-separated">
+																			</ul>
+		</div>
+
+	</div><!--/page_footer-->
+</div><!--/page_container-->
+
+
+<div id="ajax-loading"><b>Loading...</b></div>
+<div id="ajax-error"><b>Error</b></div>
+<style>
+#bb-alert-box {
+	width: auto;
+	max-width: 800px;
+	line-height: 18px;
+	display: none;
+}
+#bb-alert-msg {
+	min-width: 400px;
+	max-height: 400px;
+	margin: 50px 20px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.bb-alert-err {
+	color: #7E0000;
+	background: #FFEEEE;
+	box-shadow: 0 0 20px #B85353;
+	font-weight: bold;
+}
+</style>
+<div id="bb-alert-box">
+	<div id="bb-alert-msg"></div>
+</div>
+<div id="modal-blocker"></div>
+
+<script>
+$(function () {
+	if (!BB.hasET() && BB.getUrlParam('view') !== 'print') {
+		BB.navbar.init();
+	}
+});
+</script>
+<div id="nav-panel" class="nav-hidden-arrow hide-for-print">
+	<div id="nav-up" class="nav-btn" title="Вверх">
+		<span class="nav-icon"></span>
+	</div>
+	<div id="nav-settings" class="nav-btn">
+		<span class="nav-icon" title="Настройки"></span>
+		<ul id="nav-opt-menu">
+			<li class="nav-event" data-event="click">Показывать по клику</li>
+			<li class="nav-event" data-event="mouseenter">Показывать по наведению</li>
+		</ul>
+	</div>
+	<div id="nav-down" class="nav-btn" title="Вниз">
+		<span class="nav-icon"></span>
+	</div>
+	<div class="nav-hidden-overlay"></div>
+</div>
+
+	</div><!--/body_container-->
+
+</body>
+</html>
